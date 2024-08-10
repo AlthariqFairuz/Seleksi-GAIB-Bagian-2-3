@@ -60,3 +60,13 @@ class LogisticRegression:
         # Compute the predicted probabilities
         y_pred = self.sigmoid(np.dot(X, self.w) + self.b)
         return np.where( y_pred >= 0.5, 1, 0)
+
+if __name__ == "__main__":
+    X = np.array([[1, 2], [2, 3], [3, 4], [4, 5], [5, 6]])
+    y = np.array([0, 0, 1, 1, 1])
+
+    X_test= np.array([1, 2])
+    
+    model = LogisticRegression()
+    model.fit(X, y)
+    print(model.predict(X_test))
