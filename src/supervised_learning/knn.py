@@ -15,10 +15,6 @@ class KNNeighbours:
         self.X_train = X
         self.y_train = y
 
-    def validate_data(self, X):
-        if not np.issubdtype(X.dtype, np.number):
-            raise ValueError("All input data must be numeric.")
-
     def euclidean_distance(self, x1, x2):
         return np.sqrt(np.sum((x1 - x2)**2))
     
@@ -57,7 +53,6 @@ class KNNeighbours:
         return most_common
     
     def predict(self, X, p=2):
-        self.validate_data(X)
         y_pred = [self._predict(x, p) for x in X]
         return np.array(y_pred)
     

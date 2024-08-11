@@ -42,17 +42,18 @@ class GaussianNaiveBayes:
         return np.array(y_pred)
 
 
-# if __name__ == "__main__":
-#     x_values = pd.DataFrame({
-#         'height': [6, 5.92, 5.58, 5.92, 5, 5.5, 5.42, 5.75],
-#         'weight': [180,190,170,165,100,150,130,150],
-#         'foot': [12,11,12,10,6,8,7,9]
-#     })
+if __name__ == "__main__":
+    x_values = pd.DataFrame({
+        'height': [6, 5.92, 5.58, 5.92, 5, 5.5, 5.42, 5.75],
+        'weight': [180,190,170,165,100,150,130,150],
+        'foot': [12,11,12,10,6,8,7,9]
+    })
 
-#     y = pd.Series([0,0,0,0,1,1,1,1])
+    y = pd.Series([0,0,0,0,1,1,1,1])
 
-#     gnb= GaussianNaiveBayes()
-#     gnb.fit(x_values, y)
-#     # gnb.predict(np.array([1.1, 1.1]))
-#     print(gnb.predict(np.array([6, 13, 8])))
+    gnb= GaussianNaiveBayes()
+    print(x_values.values)
+    gnb.fit(x_values, y)
+    # gnb.predict(np.array([1.1, 1.1]))
+    print(gnb.predict(np.array([6, 13, 8])))
              
