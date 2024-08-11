@@ -1,10 +1,10 @@
 import numpy as np
 import matplotlib.pyplot as plt
 
-points = {"blue": [[3, 4, 5], [0, 3, 7], [9, 3, 2], [1, 2, 3], [2, 2, 1]],
-          "red": [[4, 5, 6], [7, 4, 5], [0, 4, 6], [1, 6, 6], [3, 5, 4]]}
+# points = {"blue": [[3, 4, 5], [0, 3, 7], [9, 3, 2], [1, 2, 3], [2, 2, 1]],
+#           "red": [[4, 5, 6], [7, 4, 5], [0, 4, 6], [1, 6, 6], [3, 5, 4]]}
 
-new_point = [3, 3, 5]
+# new_point = [3, 3, 5]
 
 class KNNeighbours:
     def __init__(self, k=3, metrics='euclidean'):    
@@ -14,6 +14,10 @@ class KNNeighbours:
     def fit(self, X, y):
         self.X_train = X
         self.y_train = y
+
+    def validate_data(self, X):
+        if not np.issubdtype(X.dtype, np.number):
+            raise ValueError("All input data must be numeric.")
 
     def euclidean_distance(self, x1, x2):
         return np.sqrt(np.sum((x1 - x2)**2))
@@ -53,45 +57,46 @@ class KNNeighbours:
         return most_common
     
     def predict(self, X, p=2):
+        self.validate_data(X)
         y_pred = [self._predict(x, p) for x in X]
         return np.array(y_pred)
     
 
-if __name__ == "__main__":
-    x_blue = np.array(points["blue"])
-    x_red = np.array(points["red"])
-    X = np.array(x_blue.tolist() + x_red.tolist())
-    y = np.array([0] * len(x_blue) + [1] * len(x_red))
+# if __name__ == "__main__":
+#     x_blue = np.array(points["blue"])
+#     x_red = np.array(points["red"])
+#     X = np.array(x_blue.tolist() + x_red.tolist())
+#     y = np.array([0] * len(x_blue) + [1] * len(x_red))
 
-    knn = KNNeighbours(k=3, metrics='euclidean')
-    knn.fit(X, y)
-    print(knn.predict([new_point]))
+#     knn = KNNeighbours(k=3, metrics='euclidean')
+#     knn.fit(X, y)
+#     print(knn.predict([new_point]))
 
 
-    # Plot the data and the new point to see whether it is classified as blue or red
-    fig = plt.figure(figsize=(15, 15))
-    ax = fig.add_subplot(projection= '3d')
-    ax.grid(True, color="#323232" )
-    ax.figure.set_facecolor("black")
-    ax.tick_params(axis='x', colors='white')
-    ax.tick_params(axis='y', colors='white')
+#     # Plot the data and the new point to see whether it is classified as blue or red
+#     fig = plt.figure(figsize=(15, 15))
+#     ax = fig.add_subplot(projection= '3d')
+#     ax.grid(True, color="#323232" )
+#     ax.figure.set_facecolor("black")
+#     ax.tick_params(axis='x', colors='white')
+#     ax.tick_params(axis='y', colors='white')
 
-    for i in range(len(x_blue)):
-        ax.scatter(x_blue[i][0], x_blue[i][1], x_blue[i][2] , color="blue")
+#     for i in range(len(x_blue)):
+#         ax.scatter(x_blue[i][0], x_blue[i][1], x_blue[i][2] , color="blue")
 
-    for i in range(len(x_red)):
-        ax.scatter(x_red[i][0], x_red[i][1],x_red[i][2], color="red")
+#     for i in range(len(x_red)):
+#         ax.scatter(x_red[i][0], x_red[i][1],x_red[i][2], color="red")
 
-    predict = knn.predict([new_point])
-    color = "blue" if new_point == 0 else "red"
-    ax.scatter(new_point[0], new_point[1], new_point[2], color=color, marker = "*", s=200, zorder= 100)
+#     predict = knn.predict([new_point])
+#     color = "blue" if new_point == 0 else "red"
+#     ax.scatter(new_point[0], new_point[1], new_point[2], color=color, marker = "*", s=200, zorder= 100)
 
-    for point in points["blue"]:
-        ax.plot([point[0], new_point[0]], [point[1], new_point[1]], [point[2], new_point[2]], color="blue", linestyle="--", linewidth=0.5)
+#     for point in points["blue"]:
+#         ax.plot([point[0], new_point[0]], [point[1], new_point[1]], [point[2], new_point[2]], color="blue", linestyle="--", linewidth=0.5)
 
-    for point in points["red"]:
-        ax.plot([point[0], new_point[0]], [point[1], new_point[1]], [point[2], new_point[2]], color="red", linestyle="--", linewidth=0.5)
+#     for point in points["red"]:
+#         ax.plot([point[0], new_point[0]], [point[1], new_point[1]], [point[2], new_point[2]], color="red", linestyle="--", linewidth=0.5)
 
-    plt.show()
+#     plt.show()
     
     
