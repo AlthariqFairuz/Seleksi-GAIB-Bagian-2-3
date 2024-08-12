@@ -1,24 +1,36 @@
 import numpy as np
 
 class LogisticRegression:
-    def __init__(self, learning_rate=0.01, iterations=1000, reg_term=None, lambda_=0.01, loss_function='squared_error'):
+    """
+    Create an instance of the Logistic Regression model
+    """
+
+    def __init__(self, learning_rate=0.01, iterations=1000, reg_term=None, lambda_=0.01):
+        """
+        Constructor for the Logistic Regression model
+        """
         self.learning_rate = learning_rate
         self.iterations = iterations
         self.reg_term = reg_term
         self.lambda_ = lambda_
-        self.loss_function = loss_function
         self.losses = []
 
     def sigmoid(self, z):
+        """
+        Compute the sigmoid function
+        """
         return 1 / (1 + np.exp(-z))
     
     def compute_loss(self, y, y_pred):
-        if self.loss_function == "squared_error":
-            return 0.5 * np.mean((y - y_pred) ** 2)
-        elif self.loss_function == "cross_entropy":
-            return -np.mean(y * np.log(y_pred) + (1 - y) * np.log(1 - y_pred))
+        """
+        Compute the loss function
+        """
+        return -np.mean(y * np.log(y_pred) + (1 - y) * np.log(1 - y_pred))
         
     def update_weights(self):
+        """
+        Update the weights and bias
+        """
         # General form of y_pred in logistic regression: Z= wX + b
         y_pred = self.sigmoid(np.dot(self.X, self.w) + self.b)
         loss = self.compute_loss(self.y, y_pred)
@@ -37,10 +49,14 @@ class LogisticRegression:
         else:
             pass
 
+        # Update the weights and bias
         self.w -= self.learning_rate * dw
         self.b -= self.learning_rate * db
 
     def fit (self, X, y):
+        """
+        Fit the training data to the model
+        """
 
         # Define the number of samples and features
         self.m, self.n = X.shape
@@ -57,16 +73,9 @@ class LogisticRegression:
             self.update_weights()
 
     def predict(self, X):
+        """
+        Predict the class label for all of the samples
+        """
         # Compute the predicted probabilities
         y_pred = self.sigmoid(np.dot(X, self.w) + self.b)
         return np.where( y_pred >= 0.5, 1, 0)
-
-# if __name__ == "__main__":
-#     X = np.array([[1, 2], [2, 3], [3, 4], [4, 5], [5, 6]])
-#     y = np.array([0, 0, 1, 1, 1])
-
-#     X_test= np.array([1, 2])
-    
-#     model = LogisticRegression()
-#     model.fit(X, y)
-#     print(model.predict(X_test))
