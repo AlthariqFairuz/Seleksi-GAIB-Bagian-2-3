@@ -13,7 +13,7 @@ class SVM:
         self.b = None
 
 
-    def update_weights(self,):
+    def update_weights(self):
         """
         Update the weights and bias
         """
@@ -37,12 +37,12 @@ class SVM:
 
         self.w= np.zeros(self.n)
         self.b= 0
-        self.X = X
-        self.Y = Y
+        self.X = X.values
+        self.Y = Y.values
 
         for _ in range(self.iterations):
             self.update_weights()
 
     def predict(self, X):
-        y_pred= np.where(np.sign(np.dot(self.X, self.w) - self.b) <= -1, 0, 1)
+        y_pred= np.where(np.sign(np.dot(X, self.w) - self.b) <= -1, 0, 1)
         return y_pred
