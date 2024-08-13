@@ -43,7 +43,6 @@ class SVM:
         for _ in range(self.iterations):
             self.update_weights()
 
-    def predict(self):
+    def predict(self, X):
         y_pred= np.where(np.sign(np.dot(self.X, self.w) - self.b) <= -1, 0, 1)
-        # return y_pred()
         return y_pred
