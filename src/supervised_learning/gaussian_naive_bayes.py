@@ -68,6 +68,5 @@ class GaussianNaiveBayes:
         """
         Predict the class label for all of the samples
         """
-        X= X.values
         y_pred = [self.predict_instance(x) for x in X]
         return np.array(y_pred)

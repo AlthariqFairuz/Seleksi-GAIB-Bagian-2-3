@@ -13,8 +13,8 @@ class KNNeighbours:
         """
         Fit the training data to the model
         """
-        self.X_train = X.values
-        self.y_train = y.values
+        self.X_train = X
+        self.y_train = y
 
     def euclidean_distance(self, x1, x2):
         """
@@ -63,5 +63,5 @@ class KNNeighbours:
         """
         Predict the class labels for a set of samples
         """
-        y_pred = [self._predict(x, p) for x in X.values]
+        y_pred = [self._predict(x, p) for x in X]
         return np.array(y_pred)

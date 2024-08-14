@@ -37,8 +37,8 @@ class SVM:
 
         self.w= np.zeros(self.n)
         self.b= 0
-        self.X = X.values
-        self.Y = Y.values
+        self.X = X
+        self.Y = Y
 
         for _ in range(self.iterations):
             self.update_weights()
