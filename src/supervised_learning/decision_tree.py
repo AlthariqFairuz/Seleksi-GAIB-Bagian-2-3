@@ -21,7 +21,7 @@ class DecisionTree:
         self.max_depth = max_depth
         self.root = None
 
-    def split(self, dataset, feature_index, threshold): 
+    def split(self, dataset, feature_index, threshold):     
         """
         Split the dataset into two parts based on the feature and threshold
         """
@@ -86,15 +86,15 @@ class DecisionTree:
                 if len(dataset_left) > 0 and len(dataset_right) > 0:
                    y, y_left, y_right= dataset[:, -1], dataset_left[:, -1], dataset_right[:, -1]
 
-                   curren_info_gain= self.information_gain(y, y_left, y_right, "gini")
+                   current_info_gain= self.information_gain(y, y_left, y_right, "gini")
 
-                   if curren_info_gain > max_info_gain:
+                   if current_info_gain > max_info_gain:
                        best_split['feature_index']= feature_index
                        best_split['threshold']= thresholds
                        best_split['data_left']= dataset_left
                        best_split['data_right']= dataset_right
-                       best_split['info_gain']= curren_info_gain
-                       max_info_gain= curren_info_gain
+                       best_split['info_gain']= current_info_gain
+                       max_info_gain= current_info_gain
 
         return best_split
 
@@ -103,7 +103,7 @@ class DecisionTree:
         num_samples, num_features= X.shape
 
         if num_samples >= self.min_samples_split and current_depth <= self.max_depth: 
-            best_split= self.get_best_split(dataset, num_samples, num_features)
+            best_split= self.get_best_split(dataset, num_features)
 
             if best_split['info_gain'] > 0:
                 left_subtree= self.construct_tree(best_split['data_left'], current_depth+1)
@@ -147,4 +147,4 @@ class DecisionTree:
             return self._predict(x, tree.right)
 
     def predict(self, X):
-        return [self._predict(x) for x in X]
+        return [self._predict(x, self.root) for x in X]
