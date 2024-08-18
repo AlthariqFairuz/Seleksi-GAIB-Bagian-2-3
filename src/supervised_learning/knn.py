@@ -6,6 +6,9 @@ class KNNeighbours:
     """
 
     def __init__(self, k=3, metrics='euclidean'):    
+        """
+        Constructor for the K-Nearest Neighbors algorithm
+        """
         self.k = k
         self.metrics = metrics
 

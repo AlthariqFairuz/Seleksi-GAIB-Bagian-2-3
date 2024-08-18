@@ -6,6 +6,9 @@ class Node:
     """
     
     def __init__(self, feature_index= None, threshold= None, left= None, right= None, info_gain= None, value= None):
+        """
+        Constructor for the Node class
+        """
         self.feature_index = feature_index
         self.threshold = threshold
         self.left = left
@@ -17,6 +20,9 @@ class DecisionTree:
     Create an instance of the Decision Tree algorithm
     """
     def __init__(self, min_samples_split= 4, max_depth= 4):
+        """
+        Constructor for the Decision Tree model
+        """
         self.min_samples_split = min_samples_split
         self.max_depth = max_depth
         self.root = None
@@ -61,6 +67,9 @@ class DecisionTree:
         return max(Y, key= Y.count)
     
     def information_gain(self, parent_node, left_child, right_child, mode= "gini"):
+        """
+        Calculate the information gain of a split
+        """
 
         left_Weight= len(left_child) / len(parent_node)
         right_Weight= len(right_child) / len(parent_node)
@@ -73,6 +82,9 @@ class DecisionTree:
         return gain
 
     def get_best_split(self, dataset, num_features):
+        """
+        Find the best split for the dataset based on the information gain
+        """
         best_split= {}
         max_info_gain= -float('inf')
 
@@ -99,6 +111,9 @@ class DecisionTree:
         return best_split
 
     def construct_tree(self, dataset, current_depth= 0):
+        """
+        Construct the decision tree recursively
+        """
         X, Y= dataset[:,:-1], dataset[:,-1]
         num_samples, num_features= X.shape
 
@@ -115,26 +130,32 @@ class DecisionTree:
 
         return Node(value= leaf_value)
 
-    def print(self, tree= None, indent= " "):   
+    # def print(self, tree= None, indent= " "):   
 
-        if tree is None:
-            tree= self.root
+    #     if tree is None:
+    #         tree= self.root
 
-        if tree.value is not None:
-            print(tree.value)
+    #     if tree.value is not None:
+    #         print(tree.value)
 
-        else:
-            print(f"{tree.feature_index}, {tree.threshold} {tree.info_gain}")
-            print(f"{indent}left: ", end= "")
-            self.print(tree.left, indent + indent)
-            print(f"{indent}right: ", end= "")
-            self.print(tree.right, indent + indent)
+    #     else:
+    #         print(f"{tree.feature_index}, {tree.threshold} {tree.info_gain}")
+    #         print(f"{indent}left: ", end= "")
+    #         self.print(tree.left, indent + indent)
+    #         print(f"{indent}right: ", end= "")
+    #         self.print(tree.right, indent + indent)
 
     def fit(self, X, Y):
+        """
+        Fit the training data to the model
+        """
         dataset= np.concatenate((X, Y), axis= 1)
         self.root= self.construct_tree(dataset)
 
     def _predict(self, x, tree):
+        """
+        Predict the class label for a single sample
+        """
         
         if tree.value is not None:
             return tree.value
@@ -147,4 +168,7 @@ class DecisionTree:
             return self._predict(x, tree.right)
 
     def predict(self, X):
+        """
+        Predict the class labels for a set of samples
+        """
         return [self._predict(x, self.root) for x in X]

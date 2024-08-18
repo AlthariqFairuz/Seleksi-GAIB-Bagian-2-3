@@ -6,6 +6,9 @@ class SVM:
     """
 
     def __init__(self, learning_rate=0.001, lambda_param=0.01, iterations=1000):
+        """
+        Constructor for the SVM model
+        """
         self.learning_rate = learning_rate
         self.lambda_param = lambda_param
         self.iterations = iterations
@@ -44,5 +47,8 @@ class SVM:
             self.update_weights()
 
     def predict(self, X):
+        """
+        Predict the class label for a single sample
+        """
         y_pred= np.where(np.sign(np.dot(X, self.w) - self.b) <= -1, 0, 1)
         return y_pred
