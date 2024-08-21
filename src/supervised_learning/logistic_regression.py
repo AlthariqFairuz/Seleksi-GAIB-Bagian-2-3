@@ -1,6 +1,8 @@
 import numpy as np
+from sklearn.base import BaseEstimator, ClassifierMixin # Import these so we can use cross val score to evaluate our model, we take classifiermixin since we are building a classifier
 
-class LogisticRegression:
+
+class LogisticRegression(BaseEstimator, ClassifierMixin):
     """
     Create an instance of the Logistic Regression model
     """
@@ -12,7 +14,7 @@ class LogisticRegression:
         self.learning_rate = learning_rate
         self.iterations = iterations
         self.reg_term = reg_term
-        self.lambda_ = lambda_
+        self.lambda_ = lambda_ # How severe the penalty is
         self.losses = []
 
     def sigmoid(self, z):
@@ -46,9 +48,6 @@ class LogisticRegression:
         elif self.reg_term == 'l1':
             dw += (self.lambda_ / self.m) * np.sign(self.w)
 
-        else:
-            pass
-
         # Update the weights and bias
         self.w -= self.learning_rate * dw
         self.b -= self.learning_rate * db
@@ -79,3 +78,10 @@ class LogisticRegression:
         # Compute the predicted probabilities
         y_pred = self.sigmoid(np.dot(X, self.w) + self.b)
         return np.where( y_pred >= 0.5, 1, 0)
+    
+    # Cara kerja algoritma ini:
+    # 1. Inisialisasi parameter model
+    # 2. Hitung nilai sigmoid
+    # 3. Hitung loss function
+    # 4. Update bobot dan bias
+    # 5. Lakukan prediksi

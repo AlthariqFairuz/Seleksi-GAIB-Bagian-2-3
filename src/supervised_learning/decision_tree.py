@@ -1,4 +1,5 @@
 import numpy as np
+from sklearn.base import BaseEstimator, ClassifierMixin
 
 class Node:
     """
@@ -15,9 +16,12 @@ class Node:
         self.right = right
         self.value = value
 
-class DecisionTree:
+class DecisionTree(BaseEstimator, ClassifierMixin):
     """
     Create an instance of the Decision Tree algorithm
+
+    NOTE: Convert Y (label/target) to 2D array to avoid error when concatenating using np.reshape(-1, 1)
+            You can convert it back to 1D array using np.ravel() or np.flatten() after concatenation
     """
     def __init__(self, min_samples_split= 4, max_depth= 4):
         """
@@ -130,20 +134,20 @@ class DecisionTree:
 
         return Node(value= leaf_value)
 
-    # def print(self, tree= None, indent= " "):   
+    def print(self, tree= None, indent= " "):   
 
-    #     if tree is None:
-    #         tree= self.root
+        if tree is None:
+            tree= self.root
 
-    #     if tree.value is not None:
-    #         print(tree.value)
+        if tree.value is not None:
+            print(tree.value)
 
-    #     else:
-    #         print(f"{tree.feature_index}, {tree.threshold} {tree.info_gain}")
-    #         print(f"{indent}left: ", end= "")
-    #         self.print(tree.left, indent + indent)
-    #         print(f"{indent}right: ", end= "")
-    #         self.print(tree.right, indent + indent)
+        else:
+            print(f"{tree.feature_index}, {tree.threshold} {tree.info_gain}")
+            print(f"{indent}left: ", end= "")
+            self.print(tree.left, indent + indent)
+            print(f"{indent}right: ", end= "")
+            self.print(tree.right, indent + indent)
 
     def fit(self, X, Y):
         """

@@ -1,6 +1,8 @@
 import numpy as np
+from sklearn.base import BaseEstimator, ClassifierMixin
 
-class GaussianNaiveBayes:
+
+class GaussianNaiveBayes(BaseEstimator, ClassifierMixin):
     """
     Create an instance of the Gaussian Naive Bayes algorithm
     """

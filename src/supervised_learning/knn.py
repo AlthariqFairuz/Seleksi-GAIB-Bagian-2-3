@@ -1,6 +1,7 @@
 import numpy as np
+from sklearn.base import BaseEstimator, ClassifierMixin # Import these so we can use cross val score to evaluate our model, we take classifiermixin since we are building a classifier
 
-class KNNeighbours:
+class KNNeighbours(BaseEstimator, ClassifierMixin): # Inherit from BaseEstimator and ClassifierMixin
     """
     Create an instance of the K-Nearest Neighbors algorithm
     """
