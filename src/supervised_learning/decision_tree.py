@@ -14,22 +14,21 @@ class Node:
         self.threshold = threshold
         self.left = left
         self.right = right
+        self.info_gain = info_gain  
         self.value = value
 
 class DecisionTree(BaseEstimator, ClassifierMixin):
     """
     Create an instance of the Decision Tree algorithm
-
-    NOTE: Convert Y (label/target) to 2D array to avoid error when concatenating using np.reshape(-1, 1)
-            You can convert it back to 1D array using np.ravel() or np.flatten() after concatenation
     """
-    def __init__(self, min_samples_split= 4, max_depth= 4):
+    def __init__(self, min_samples_split= 4, max_depth= 4, mode= "gini"):
         """
         Constructor for the Decision Tree model
         """
         self.min_samples_split = min_samples_split
         self.max_depth = max_depth
         self.root = None
+        self.mode= mode
 
     def split(self, dataset, feature_index, threshold):     
         """
@@ -102,7 +101,7 @@ class DecisionTree(BaseEstimator, ClassifierMixin):
                 if len(dataset_left) > 0 and len(dataset_right) > 0:
                    y, y_left, y_right= dataset[:, -1], dataset_left[:, -1], dataset_right[:, -1]
 
-                   current_info_gain= self.information_gain(y, y_left, y_right, "gini")
+                   current_info_gain= self.information_gain(y, y_left, y_right, self.mode)
 
                    if current_info_gain > max_info_gain:
                        best_split['feature_index']= feature_index
@@ -134,25 +133,26 @@ class DecisionTree(BaseEstimator, ClassifierMixin):
 
         return Node(value= leaf_value)
 
-    def print(self, tree= None, indent= " "):   
+    # def print(self, tree= None, indent= " "):   
 
-        if tree is None:
-            tree= self.root
+    #     if tree is None:
+    #         tree= self.root
 
-        if tree.value is not None:
-            print(tree.value)
+    #     if tree.value is not None:
+    #         print(tree.value)
 
-        else:
-            print(f"{tree.feature_index}, {tree.threshold} {tree.info_gain}")
-            print(f"{indent}left: ", end= "")
-            self.print(tree.left, indent + indent)
-            print(f"{indent}right: ", end= "")
-            self.print(tree.right, indent + indent)
+    #     else:
+    #         print(f"{tree.feature_index}, {tree.threshold} {tree.info_gain}")
+    #         print(f"{indent}left: ", end= "")
+    #         self.print(tree.left, indent + indent)
+    #         print(f"{indent}right: ", end= "")
+    #         self.print(tree.right, indent + indent)
 
     def fit(self, X, Y):
         """
         Fit the training data to the model
         """
+        Y= np.reshape(Y, (-1, 1))
         dataset= np.concatenate((X, Y), axis= 1)
         self.root= self.construct_tree(dataset)
 
