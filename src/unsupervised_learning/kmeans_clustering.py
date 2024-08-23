@@ -4,7 +4,7 @@ class KMeans:
     """
     Create an instance of the K-Means clustering algorithm
     """
-    def __init__(self, n_clusters=3, max_iter=300, init='random'):
+    def __init__(self, n_clusters=3, max_iter=300, init='kmeans++'):
         """
         Constructor for the K-Means clustering algorithm
         """
