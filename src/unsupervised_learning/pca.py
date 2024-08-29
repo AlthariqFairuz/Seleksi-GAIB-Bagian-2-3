@@ -22,8 +22,14 @@ class PCA:
         return self
 
     def transform(self, X):
+        """
+        Transform the data
+        """
         return np.dot(X, self.eigenvectors)
     
     def fit_transform(self, X):
+        """
+        Fit the training data to the model and transform it
+        """
         self.fit(X)
         return self.transform(X)

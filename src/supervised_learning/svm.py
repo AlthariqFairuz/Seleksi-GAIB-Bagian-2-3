@@ -12,7 +12,7 @@ class SVM(BaseEstimator, ClassifierMixin):
         """
         self.learning_rate = learning_rate
         self.lambda_param = lambda_param  # Regularization strength for L2 norm
-        self.C = C  # Regularization strength for slack variables (soft margin)
+        self.C = C # Regularization strength for slack variables (soft margin). Large C means less tolerance for misclassification
         self.iterations = iterations
         self.w = None
         self.b = None

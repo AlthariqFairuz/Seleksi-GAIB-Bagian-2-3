@@ -78,10 +78,3 @@ class LogisticRegression(BaseEstimator, ClassifierMixin):
         # Compute the predicted probabilities
         y_pred = self.sigmoid(np.dot(X, self.w) + self.b)
         return np.where( y_pred >= 0.5, 1, 0)
-    
-    # Cara kerja algoritma ini:
-    # 1. Inisialisasi parameter model
-    # 2. Hitung nilai sigmoid
-    # 3. Hitung loss function
-    # 4. Update bobot dan bias
-    # 5. Lakukan prediksi

@@ -35,6 +35,22 @@ class ActivationFunction:
     def softmax_derivative(x):
         # For usage with cross-entropy, this typically simplifies during backpropagation. However, this is not the general derivative of softmax.
         return x * (1 - x)
+    
+    @staticmethod
+    def leaky_relu(x):
+        return np.where(x > 0, x, x * 0.01)
+    
+    @staticmethod
+    def leaky_relu_derivative(x):
+        return np.where(x > 0, 1, 0.01)
+    
+    @staticmethod
+    def exponential_relu(x):
+        return np.where(x > 0, x, np.exp(x) - 1)
+    
+    @staticmethod
+    def exponential_relu_derivative(x):
+        return np.where(x > 0, 1, np.exp(x))
 
 # Loss functions
 class LossFunction:
@@ -55,6 +71,17 @@ class LossFunction:
     def binary_cross_entropy_derivative(y, y_pred):
         y_pred = np.clip(y_pred, 1e-15, 1 - 1e-15)  # Prevent division by 0
         return (y_pred - y) / (y_pred * (1 - y_pred)) 
+    
+    @staticmethod
+    def cross_entropy(y, y_pred):
+        # Avoid log(0) by adding a small epsilon
+        epsilon = 1e-15
+        y_pred = np.clip(y_pred, epsilon, 1 - epsilon)
+        return -np.mean(np.sum(y * np.log(y_pred), axis=1))
+    
+    @staticmethod 
+    def cross_entropy_derivative(y, y_pred):
+        return y_pred - y
 
 # Regularization
 class Regularization:
@@ -96,6 +123,10 @@ class FullyConnectedLayer:
             return ActivationFunction.linear(z)
         elif self.activation == 'softmax':
             return ActivationFunction.softmax(z)
+        elif self.activation == 'leaky_relu':
+            return ActivationFunction.leaky_relu(z)
+        elif self.activation == 'exponential_relu':
+            return ActivationFunction.exponential_relu(z)
 
     def activate_derivative(self, a):
         if self.activation == 'sigmoid':
@@ -106,6 +137,10 @@ class FullyConnectedLayer:
             return ActivationFunction.linear_derivative(a)
         elif self.activation == 'softmax':
             return ActivationFunction.softmax_derivative(a)
+        elif self.activation == 'leaky_relu':
+            return ActivationFunction.leaky_relu_derivative(a)
+        elif self.activation == 'exponential_relu':
+            return ActivationFunction.exponential_relu_derivative(a)
 
     def forward(self, input_data):
         self.input_data = input_data
@@ -149,6 +184,9 @@ class NeuralNetwork:
         elif loss_function == 'binary_cross_entropy':
             self.loss_function = LossFunction.binary_cross_entropy
             self.loss_function_derivative = LossFunction.binary_cross_entropy_derivative
+        elif loss_function == 'cross_entropy':
+            self.loss_function = LossFunction.cross_entropy
+            self.loss_function_derivative = LossFunction.cross_entropy_derivative
         else:
             raise ValueError('Invalid loss function')
 
