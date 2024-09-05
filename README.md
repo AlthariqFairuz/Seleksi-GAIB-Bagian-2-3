@@ -27,6 +27,7 @@ Berikut adalah model yang diimplementasikan pada repositori beriikut:
 
 **Bonus yang diimplementasikan:**
 - Penambahan fungsi aktivasi lain pada ANN, seperti leaky ReLU dan exponential ReLU
+- Implementasi Gradient Boosting sebagai salah satu method _ensemble learning_
 
 **Unsupervised Learning (Bagian 3):**
 - [v] K-MEANS
