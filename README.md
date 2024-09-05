@@ -20,7 +20,7 @@ Berikut adalah model yang diimplementasikan pada repositori beriikut:
 **Supervised Learning (Bagian 2):**
 - [v] KNN
 - [v] Logistic Regression
-- [v] Gaussian Naive Bayes (kalo tasknya regresi, gausah ceklis tp kasih keterangan)
+- [v] Gaussian Naive Bayes
 - [v] CART
 - [v] SVM
 - [v] ANN
@@ -39,3 +39,8 @@ Berikut adalah model yang diimplementasikan pada repositori beriikut:
 **Reinforcement Learning (Bagian 4):**
 - [v] Q-LEARNING
 - [v] SARSA
+
+
+| Author  | NIM |
+| ------------- | ------------- |
+| Muhammad Althariq Fairuz  | 13522027  |
